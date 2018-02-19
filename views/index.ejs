@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hangman | Welcome</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-bare/vendor/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <style>
+        body {
+            padding-top: 54px;
+        }
+
+        @media (min-width: 992px) {
+            body {
+                padding-top: 56px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="mt-5">Hangman 5.5</h1>
+            <p>Guesses remaining: <%= guessLimit %></p>
+            <p><%= gameStatus %></p>
+
+            <% if(guessLimit !== 0 && !endOfGame){ %>
+            <p>##### Rules of Hangman #####</p>
+            <p>You have five guesses</p>
+            <p>You can only guess one letter at a time</p>
+            <p>If you guess correctly the letter will appear in its correct order</p>
+            <p><%= underscores %></p>
+            <p><%= incorrectLetters %></p>
+            <form action="/guess" method="post">
+                <input type="text" name="guess" value="" placeholder="Enter a letter to guess"/>
+                <button type="submit" name="guess-button">Go!</button>
+            </form>
+            <% } else{ %>
+            <p></p>
+            <% } %>
+
+            <% if(endOfGame){ %>
+            <form action="/highScore" method="post">
+                <input type="text" name="player" placeholder="Enter your name"/>
+                <button type="submit" name="guess-button">Save</button>
+            </form>
+
+            </br>
+            <p>High scores:</p>
+            <% scoreHistory.forEach(function(scoreHistory) { %>
+            <%= scoreHistory.name %> : <%= scoreHistory.score %> </br>
+            <% }); %>
+            <% } else{ %>
+            <p></p>
+            <% } %>
+
+            <% if (guessLimit === 0) { %>
+            <form action="/newGame" method="post">
+            <button type="submit" name="new-game">New Game</button>
+            </form>
+            <% } else{ %>
+            <p></p>
+            <% } %>
+            <p><img src="images/monster.png" style="max-height: 300px;"/></p>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="public/javascripts/jquery/jquery.min.js"></script>
+<script src="public/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
